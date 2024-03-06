@@ -1,6 +1,16 @@
 # ORDER-API-BUBBLE
 
 ## Como rodar
+Instalar as bibliotecas
+```
+npm install
+```
+
+Comando para rodar
+```
+npm start
+```
+
 Necessário definir as seguintes variaveis no .env
 ```env
 SERVER_PORT=
