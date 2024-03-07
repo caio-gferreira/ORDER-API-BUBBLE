@@ -21,11 +21,11 @@ module.exports = class UserController {
             const query = this.database.useSelectQuery('usuarios');
             const data = await this.database.consultQuery(query);
     
-            return rest.json({ data })
+            return rest.status(200).json({ data })
         } catch (err) {
             console.error(`[ERROR]:  ${UserController.name} in method ${this.getListUser.name}\n${err}`);
 
-            return rest.json({
+            return rest.status(403).json({
                 message: err,
             })
         }
@@ -63,7 +63,7 @@ module.exports = class UserController {
         } catch(error) {
             console.error(`[ERROR]:  ${UserController.name} in method ${this.createUser.name}\n${error}`);
 
-            return rest.json({
+            return rest.status(403).json({
                 message: error,
             })
         }

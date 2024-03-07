@@ -21,10 +21,10 @@ module.exports = class OrderController {
                 const query = this.database.useSelectQueryByField('orders', 'orderId', orderId);
                 const data = await this.database.consultQuery(query);
         
-                return rest.json({ data })
+                return rest.status(200).json({ data })
             } catch(err) {
                 console.error(`[ERROR]: ${ this.gerOrderById.name }, ${ err }`);
-                return rest.json({
+                return rest.status(403).json({
                     message: err,
                 })
             }
@@ -72,12 +72,12 @@ module.exports = class OrderController {
             await this.saveOrderItemsInDatabase(itemsData, orderId);
 
 
-            return rest.json({ items });
+            return rest.status(200).json({ items });
 
         } catch(err) {
             console.error(`[ERROR]: ${ this.createOrder.name }, ${ err }`);
 
-            return rest.json({
+            return rest.status(403).json({
                 message: err,
             })
         }
@@ -115,11 +115,11 @@ module.exports = class OrderController {
                 orders.push(order);
             }
     
-            return rest.json({ data: orders });
+            return rest.status(200).json({ data: orders });
         } catch(err) {
             console.error(`[ERROR]: ${this.getListOrders.name}, ${err}`);
 
-            return rest.json({
+            return rest.status(403).json({
                 message: err,
             })
         }

@@ -21,11 +21,11 @@ module.exports = class ProductController {
             const query = this.database.useSelectQueryByField('products', 'sku', sku);
             const data = await this.database.consultQuery(query);
     
-            return rest.json({ data })
+            return rest.status(200).json({ data })
         } catch (err) {
             console.error(`[ERROR]:  ${ProductController.name} in method ${this.getProductBySku.name}\n${error}`);
 
-            return rest.json({
+            return rest.status(403).json({
                 message: err,
             })
         }
@@ -37,10 +37,15 @@ module.exports = class ProductController {
      * @param {express.Response} rest
      */
     async getListProducts(req, rest) {
-        const query = this.database.useSelectQuery('products');
-        const data = await this.database.consultQuery(query);
-
-        return rest.json({ data })
+        try {
+            const query = this.database.useSelectQuery('products');
+            const data = await this.database.consultQuery(query);
+    
+            return rest.status(200).json({ data })
+        } catch (err) {
+            console.error(`[ERROR]:  ${ProductController.name} in method ${this.getListProducts.name}\n${err}`);
+            return rest.status(403).json({ err })
+        }
     }
 
     /**
@@ -66,7 +71,7 @@ module.exports = class ProductController {
             });
         } catch(err) {
             console.error(`[ERROR]:  ${ProductController.name} in method ${this.createProduct.name}\n${error}`);
-            return rest.json({
+            return rest.status(403).json({
                 message: err,
             })
         }
